@@ -24,6 +24,17 @@ app.post('/api/people', (req, res)=> {
   res.status(201).json({success: true, person:name})
 })
 
+app.post('/api/postman/people', (req, res)=> {
+  console.log(req)
+  const {name} = req.body
+  if(!name) {
+    return res
+    .status(400)
+    .json({success:false, msg:'please provide name value'})
+  }
+  res.status(201).json({success: true, data:[...people, name]})
+})
+
 app.post('/login', (req, res) => {
   const {name} = req.body;
   if(name) {
@@ -31,9 +42,13 @@ app.post('/login', (req, res) => {
   }
 
   res.status(401).send('Please Provide Credentials')
+})
 
-
-  res.send('POST')
+app.put('/api/people/:id', (req, res) => {
+const {id} = req.params
+const {name} = req.body
+console.log(id, name)
+res.send('hello world')
 })
 
 app.listen(5000, () => {
